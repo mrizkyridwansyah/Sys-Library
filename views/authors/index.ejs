@@ -5,12 +5,19 @@
             <label for="author-name">Name</label>
             <input type="text" name="name" class="form-control" id="author-name" value="<%= search.name %>">
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-success">Search</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href = 'authors/create'">Add New</button>
     </form>
     <br>
-    <% authors.forEach(author => { %>
-        <div>
-            <%= author.name %>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <% authors.forEach(author => { %>
+                    <li class="list-group-item">
+                        <%= author.name %>
+                        <span class="badge badge-danger" style="float: right;">Delete</span>
+                        <span class="badge badge-primary mr-2" style="float: right;">Edit</span>
+                    </li>
+                <% }) %>
+            </ul>
         </div>
-    <% }) %>
 </div>
