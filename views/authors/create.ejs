@@ -1,0 +1,8 @@
+<div class="col-md-6 mt-3">
+    <h3 class="mb-3">Create New Author</h3>
+    <form action="/authors" method="POST">
+        <%- include('./_form_fields')%>
+        <button type="submit" class="btn btn-danger" onclick="window.location.href('/authors')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

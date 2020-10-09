@@ -19,6 +19,7 @@ db.on('open', err => console.log('connected to Mongoose'))
 
 //Require Controller/Router
 const indexRouter = require('./routes/index')
+const authorRouter = require('./routes/authors')
 
 //Setup View Engine, View & Layout Folder
 app.set('view engine', 'ejs')
@@ -31,8 +32,9 @@ app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({limit: "10mb", extended: false}));//limit for uploading file max 10mb
 
-//Call the Controller/Router
-app.get('/' ,indexRouter)
+//Use the Controller/Router
+app.use('/' ,indexRouter)
+app.use('/authors', authorRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
