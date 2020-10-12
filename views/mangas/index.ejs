@@ -37,7 +37,7 @@
                             <a href="#" class="btn btn-primary">Detail</a>
                         </div>
                         <div class="card-footer text-muted">
-                            <%= manga.diffDays > 1 ? manga.diffDays + ' days ago' : manga.diffDays + ' day ago' %>
+                            <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                             <a href="#" class="btn btn-primary">Detail</a>
                         </div>
                         <div class="card-footer text-muted">
-                            <%= manga.diffDays > 1 ? manga.diffDays + ' days ago' : manga.diffDays + ' day ago' %>
+                            <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <a href="#" class="btn btn-primary">Detail</a>
                     </div>
                     <div class="card-footer text-muted">
-                        <%= manga.diffDays > 1 ? manga.diffDays + ' days ago' : manga.diffDays + ' day ago' %>
+                        <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,60 @@
+    <div class="col-md-12 mt-5">
+        <h3><%= author.name %></h3>
+        <a class="badge badge-primary" href="/authors/<%= author.id %>/edit">Edit</a>
+        <a class="badge badge-danger" style="cursor: pointer;" onclick="document.getElementById('delete-<%= author.id %>').click()">Delete</a>
+        <form action="/authors/<%= author.id %>?_method=DELETE" method="POST" style="display: none;">
+            <button type="submit" id="delete-<%= author.id %>"></button>
+        </form>
+
+        <hr>
+        <% if(mangas) { %>
+            <% let index = 1;
+            mangas.forEach(manga => { 
+                if(index == 1 || (index % 3) == 1) { %>
+                    <div class="row">
+                        <div class="col-md-4 mt-3">
+                            <div class="card text-center">    
+                                <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= manga.title %></h5>
+                                    <p class="card-text"><%= manga.description %></p>
+                                    <a href="#" class="btn btn-primary">Detail</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
+                                </div>
+                            </div>
+                        </div>
+                <% } else if((index % 3) == 0) { %>
+                        <div class="col-md-4 mt-3">
+                            <div class="card text-center">    
+                                <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= manga.title %></h5>
+                                    <p class="card-text"><%= manga.description %></p>
+                                    <a href="#" class="btn btn-primary">Detail</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <div class="col-md-4 mt-3">
+                        <div class="card text-center">    
+                            <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= manga.title %></h5>
+                                <p class="card-text"><%= manga.description %></p>
+                                <a href="#" class="btn btn-primary">Detail</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
+                            </div>
+                        </div>
+                    </div>
+                <%  } %>
+            <% index++; }) %>    
+        <%  } %>
+    </div>

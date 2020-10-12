@@ -6,6 +6,7 @@ if(process.env.NODE_ENV !== 'production'){
 const express = require('express');
 const bodyParser = require('body-parser');
 const explayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');//used to using method put, delete
 const app = express();
 
 //Setup Database MongoDb with Mongoose
@@ -28,6 +29,8 @@ app.set('views', `${__dirname}/views`)
 app.set('layout', 'layouts/layout')
 app.use(explayouts)
 
+//Using method override
+app.use(methodOverride('_method'));
 //Setup Public Folder & Use Body Parser
 app.use(express.static('public'))
 app.use(bodyParser.json());
