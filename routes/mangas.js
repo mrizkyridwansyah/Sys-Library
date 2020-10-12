@@ -5,6 +5,7 @@ const Manga = require('../models/mangas')
 //Setup type file that can be uploaded
 const imgMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 
+//Index Manga
 router.get('/', async (req, res) => {
     let query = Manga.find();    
     if(req.query.title && req.query.title !== ''){
@@ -46,11 +47,12 @@ router.get('/', async (req, res) => {
     }
 })
 
+//Create Manga
 router.get('/create', async (req, res) => {
     renderNewPage(res, new Manga())
 })
 
-//upload single return a request object file
+//Save Manga
 router.post('/', async (req, res) => {
     //Set published date if the manga was published
     const published_date = req.body.published_date ? new Date(req.body.published_date) : null;
@@ -79,7 +81,82 @@ router.post('/', async (req, res) => {
     }
 })
 
+//Show Manga
+router.get('/:id', async (req, res) => {
+    try{
+        let manga = await Manga.findById(req.params.id)
+                               .populate('author')
+                               .exec(); 
+        res.render('mangas/show', { manga : manga })
+    } catch {
+        res.redirect('/')
+    }
+})
+
+//Edit Manga
+router.get('/:id/edit', async (req, res) => {
+    let manga
+    try{
+        manga = await Manga.findById(req.params.id); 
+        renderEditPage(res, manga);
+    } catch {
+        renderEditPage(res, manga, true, 'Error Showing Manga');
+    }
+})
+
+router.put('/:id', async (req, res) => {
+    const published_date = req.body.published_date ? new Date(req.body.published_date) : null;
+    let manga
+    try {
+        manga = await Manga.findById(req.params.id);
+        manga.title= req.body.title;
+        manga.description= req.body.description;
+        manga.page_count= req.body.page_count;
+        manga.is_publish= req.body.is_publish !== undefined;
+        manga.published_date= published_date;
+        manga.author= req.body.author;
+
+        if(req.body.is_publish !== undefined && (!req.body.published_date || req.body.published_date === '')) {
+            renderEditPage(res, manga, true, 'Published Date invalid')
+        }
+        
+        if(req.body.cover_image != null && req.body.cover_image != '') {
+            saveCover(manga, req.body.cover_image)
+        }
+
+        await manga.save()
+        res.redirect(`/mangas/${manga.id}`);
+    } catch {
+        renderEditPage(res, manga, true, 'Error Updating Manga')
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    let manga
+    try{
+        manga = await Manga.findById(req.params.id)
+                           .populate('author')
+                           .exec();
+        await manga.remove();
+        res.redirect('/mangas')
+    } catch{
+        if(manga == null) {
+            res.redirect('/')
+        } else {
+            res.redirect('mangas/show', { mangas: mangas, errorMessage: err})
+        }
+    }
+})
+
 async function renderNewPage(res, manga, hasError = false, errorMessage) {
+    renderFormPage(res, manga, 'create', hasError, errorMessage)
+}
+
+async function renderEditPage(res, manga, hasError = false, errorMessage) {
+    renderFormPage(res, manga, 'edit', hasError, errorMessage)
+}
+
+async function renderFormPage(res, manga, form, hasError = false, errorMessage) {
     try{
         const authors = await Author.find();
         const params = {
@@ -88,7 +165,7 @@ async function renderNewPage(res, manga, hasError = false, errorMessage) {
         }
         //hasError will be true when this function call from catch
         if(hasError) params.errorMessage = errorMessage
-        res.render('mangas/create', params)
+        res.render(`mangas/${form}`, params)
     } catch{
         res.render('/mangas')
     }
@@ -102,4 +179,5 @@ function saveCover(manga, coverEncoded){
         manga.cover_image_type = cover.type
     }
 }
+
 module.exports = router

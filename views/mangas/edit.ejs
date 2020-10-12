@@ -1,8 +1,8 @@
 <div class="col-md-8 mt-4">
-    <h3 class="mb-3">Create New Manga</h3>
-    <form action="/mangas" method="POST">
+    <h3 class="mb-3">Edit Manga</h3>
+    <form action="/mangas/<%= manga.id%>?_method=PUT" method="POST">
         <%- include('./_form_fields') %>
         <button type="button" class="btn btn-danger" onclick="window.location.href='/mangas'">Cancel</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

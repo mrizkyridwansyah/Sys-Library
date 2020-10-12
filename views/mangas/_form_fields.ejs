@@ -9,10 +9,10 @@
             <select name="author" class="form-control" id="author">
                 <option value="">Select Author</option>
                 <% authors.forEach(author => { %>        
-                    <% if(author._id === manga.author ) { %>
-                        <option selected value="<%= author._id %>"><%= author.name %></option>
+                    <% if(author.id == manga.author ) { %>
+                        <option selected value="<%= author.id %>"><%= author.name %></option>
                     <% } else { %>            
-                        <option value="<%= author._id %>"><%= author.name %></option>
+                        <option value="<%= author.id %>"><%= author.name %></option>
                     <% } %>            
                 <% }) %>
             </select>
@@ -20,13 +20,13 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <input type="checkbox" name="is_publish" id="is-publish" checked="<%= manga.is_publish %>" onclick="togglePublishDate(this)" >
+            <input type="checkbox" name="is_publish" id="is-publish" <%= manga.is_publish ? 'checked' : '' %> onclick="togglePublishDate(this)" >
             <label for="is-publish">Publish</label>
-            <input type="date" class="form-control" id="publish-date" name="published_date" checked="<%= manga.published_date == null ? '' : manga.published_date.toISOString().split('T')[0] %>">
+            <input type="<%= manga.is_publish ? 'date' : 'hidden' %>" class="form-control" id="publish-date" name="published_date" value="<%= manga.published_date == null ? '' : manga.published_date.toISOString().split('T')[0] %>">
         </div>
         <div class="form-group col-md-6">
             <label for="page">Page</label>
-            <input type="number" class="form-control" name="page_count" min="1" id="page" checked="<%= manga.page_count %>">
+            <input type="number" class="form-control" name="page_count" min="1" id="page" value="<%= manga.page_count %>">
         </div>
     </div>
     <div class="form-row">

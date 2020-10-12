@@ -1,0 +1,26 @@
+<div class="col-4 col-md-12 mt-5">
+    <a class="badge badge-success" href="/authors/<%= manga.author.id %>">View Author</a>
+    <a class="badge badge-primary" href="/mangas/<%= manga.id %>/edit">Edit</a>
+    <a class="badge badge-danger" style="cursor: pointer;" onclick="if(confirm('Are you sure?')) document.getElementById('delete-<%= manga.id %>').click()">Delete</a>
+    <form action="/mangas/<%= manga.id %>?_method=DELETE" method="POST" style="display: none;">
+        <button type="submit" id="delete-<%= manga.id %>"></button>
+    </form>
+</div>
+<div class="col-md-12 mt-2">
+    <div class="card mb-3" style="max-width: 1080px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img src="<%= manga.coverImagePath%>" class="card-img">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><%= manga.title %></h5>
+                <p class="card-text"><%= manga.description %></p>
+                <p class="card-text">
+                    <small class="text-muted"><%= manga.author.name %> - <%= manga.is_publish ? manga.published_date.toDateString() : 'Not Published' %></small>
+                </p>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
