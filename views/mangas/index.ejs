@@ -51,7 +51,7 @@
                             <a href="#" class="btn btn-primary">Detail</a>
                         </div>
                         <div class="card-footer text-muted">
-                            <%= manga.create_at %>
+                            <%= manga.diffDays > 1 ? manga.diffDays + ' days ago' : manga.diffDays + ' day ago' %>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <a href="#" class="btn btn-primary">Detail</a>
                     </div>
                     <div class="card-footer text-muted">
-                        <%= manga.create_at %>
+                        <%= manga.diffDays > 1 ? manga.diffDays + ' days ago' : manga.diffDays + ' day ago' %>
                     </div>
                 </div>
             </div>

@@ -1,21 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const multer = require('multer')
-const path = require('path')
-const fs = require('fs')
 const Author = require('../models/author')
 const Manga = require('../models/mangas')
-//Setup Folder for uploaded file
-const uploadPath = path.join('public', Manga.coverImageBasePath)
 //Setup type file that can be uploaded
 const imgMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
-//Using multer dest (destination path), fileFilter = validating type file
-const upload = multer({
-    dest: uploadPath,
-    fileFilter: (req, file, callback) => {
-        callback(null, imgMimeTypes.includes(file.mimetype))
-    }
-})
 
 router.get('/', async (req, res) => {
     let query = Manga.find();    
@@ -63,9 +51,7 @@ router.get('/create', async (req, res) => {
 })
 
 //upload single return a request object file
-router.post('/', upload.single('cover_image'), async (req, res) => {
-    //Set file name for database
-    const fileName = req.file != null ? req.file.filename : null;
+router.post('/', async (req, res) => {
     //Set published date if the manga was published
     const published_date = req.body.published_date ? new Date(req.body.published_date) : null;
     //Set Object as return value if error & for save database
@@ -73,7 +59,6 @@ router.post('/', upload.single('cover_image'), async (req, res) => {
         title: req.body.title,
         description: req.body.description,
         page_count: req.body.page_count,
-        cover_image: fileName,
         is_publish: req.body.is_publish !== undefined,
         published_date: published_date,
         author: req.body.author,
@@ -83,14 +68,12 @@ router.post('/', upload.single('cover_image'), async (req, res) => {
         renderNewPage(res, manga, true, 'Published Date invalid')
     }
 
+    saveCover(manga, req.body.cover_image)
+
     try{
         const newManga = await manga.save()//saving the manga object
         res.redirect('mangas');
     }catch(e) {
-        //Remove the uploaded file when error
-        if(manga.cover_image != null) {
-            removeMangaCover(manga.cover_image)
-        }
         //Return to form create manga with last input manga object
         renderNewPage(res, manga, true, 'Error Creating Manga')
     }
@@ -111,13 +94,12 @@ async function renderNewPage(res, manga, hasError = false, errorMessage) {
     }
 }
 
-function removeMangaCover(filename) {
-    //Remove the file which has uploaded while the data saved error
-    //uploadPath = public/upload/mangaCovers
-    //filename = name of file from returning value when upload.single
-    fs.unlink(path.join(uploadPath, filename), err => {
-        if(err) console.error(err)
-    })
+function saveCover(manga, coverEncoded){
+    if(coverEncoded == null) return
+    const cover = JSON.parse(coverEncoded)
+    if(cover != null && imgMimeTypes.includes(cover.type)) {
+        manga.cover_image = new Buffer.from(cover.data, 'base64')
+        manga.cover_image_type = cover.type
+    }
 }
-
 module.exports = router

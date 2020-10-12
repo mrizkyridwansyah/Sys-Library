@@ -1,8 +1,6 @@
 const { render } = require('ejs');
 const mongoose = require('mongoose');
 const path = require('path')
-//Setup folder to save uploaded file
-const coverImageBasePath = 'upload/mangaCovers'
 
 const mangaSchema = mongoose.Schema({
     title: {
@@ -22,6 +20,10 @@ const mangaSchema = mongoose.Schema({
         default: Date.now
     },
     cover_image : {
+        type: Buffer,
+        required: true
+    },
+    cover_image_type: {
         type: String,
         required: true
     },
@@ -40,11 +42,9 @@ const mangaSchema = mongoose.Schema({
 })
 
 mangaSchema.virtual('coverImagePath').get(function () {
-    if(this.cover_image !== null) {
-        return path.join('/', coverImageBasePath, this.cover_image)
+    if(this.cover_image !== null && this.cover_image_type != null) {
+        return `data:${this.cover_image_type};charset=utf-8;base64,${this.cover_image.toString('base64')}`
     }
 })
 
 module.exports = mongoose.model('Manga', mangaSchema)
-//export the path not as default
-module.exports.coverImageBasePath = coverImageBasePath
