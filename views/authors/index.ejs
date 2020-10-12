@@ -8,16 +8,15 @@
         <button type="submit" class="btn btn-success">Search</button>
         <button type="button" class="btn btn-primary" onclick="window.location.href = 'authors/create'">Add New</button>
     </form>
-    <br>
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                <% authors.forEach(author => { %>
-                    <li class="list-group-item">
-                        <%= author.name %>
-                        <span class="badge badge-danger" style="float: right;">Delete</span>
-                        <span class="badge badge-primary mr-2" style="float: right;">Edit</span>
-                    </li>
-                <% }) %>
-            </ul>
-        </div>
+    <div class="card mt-5">
+        <ul class="list-group list-group-flush">
+            <% authors.forEach(author => { %>
+                <li class="list-group-item">
+                    <%= author.name %>
+                    <span class="badge badge-danger" style="float: right;">Delete</span>
+                    <span class="badge badge-primary mr-2" style="float: right;">Edit</span>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
 </div>

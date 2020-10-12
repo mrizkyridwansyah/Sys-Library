@@ -20,6 +20,7 @@ db.on('open', err => console.log('connected to Mongoose'))
 //Require Controller/Router
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
+const mangasRouter = require('./routes/mangas')
 
 //Setup View Engine, View & Layout Folder
 app.set('view engine', 'ejs')
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded({limit: "10mb", extended: false}));//limit for upl
 //Use the Controller/Router
 app.use('/' ,indexRouter)
 app.use('/authors', authorRouter)
+app.use('/mangas', mangasRouter)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));

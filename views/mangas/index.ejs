@@ -1,0 +1,75 @@
+<div class="col-md-8 mt-3">
+    <h3 class="mb-3">Search Manga</h3>
+    <form action="/mangas" method="GET">
+        <div class="form-group">
+            <label for="manga-title">Title</label>
+            <input type="text" name="title" class="form-control" id="manga-title" value="<%= search.title %>">
+        </div>
+        <div class="form-group">
+            <label for="author-name">Author</label>
+            <input type="text" name="author" class="form-control" id="author-name" value="<%= search.author %>">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="published-before">Published Before</label>
+                <input type="date" name="published_before" class="form-control" id="published-before"  value="<%= search.published_before %>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="published-after">Published After</label>
+                <input type="date" name="published_after" class="form-control" id="published-after" value="<%= search.published_after %>">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Search</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href = 'mangas/create'">Add New</button>
+    </form>
+</div>
+<div class="col-md-12 mt-5">
+    <% let index = 1;
+    mangas.forEach(manga => { 
+        if(index == 1 || (index % 3) == 1) { %>
+            <div class="row">
+                <div class="col-md-4 mt-3">
+                    <div class="card text-center">    
+                        <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= manga.title %></h5>
+                            <p class="card-text"><%= manga.description %></p>
+                            <a href="#" class="btn btn-primary">Detail</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <%= manga.diffDays > 1 ? manga.diffDays + ' days ago' : manga.diffDays + ' day ago' %>
+                        </div>
+                    </div>
+                </div>
+        <% } else if((index % 3) == 0) { %>
+                <div class="col-md-4 mt-3">
+                    <div class="card text-center">    
+                        <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= manga.title %></h5>
+                            <p class="card-text"><%= manga.description %></p>
+                            <a href="#" class="btn btn-primary">Detail</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <%= manga.create_at %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="col-md-4 mt-3">
+                <div class="card text-center">    
+                    <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= manga.title %></h5>
+                        <p class="card-text"><%= manga.description %></p>
+                        <a href="#" class="btn btn-primary">Detail</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <%= manga.create_at %>
+                    </div>
+                </div>
+            </div>
+        <%  } %>
+    <% index++; }) %>    
+</div>

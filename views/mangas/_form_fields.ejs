@@ -1,0 +1,42 @@
+<div class="col-md-12 mt-3">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" id="title" value="<%= manga.title %>">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="author">Author</label>
+            <select name="author" class="form-control" id="author">
+                <option value="">Select Author</option>
+                <% authors.forEach(author => { %>        
+                    <% if(author._id === manga.author ) { %>
+                        <option selected value="<%= author._id %>"><%= author.name %></option>
+                    <% } else { %>            
+                        <option value="<%= author._id %>"><%= author.name %></option>
+                    <% } %>            
+                <% }) %>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <input type="checkbox" name="is_publish" id="is-publish" checked="<%= manga.is_publish %>" onclick="togglePublishDate(this)" >
+            <label for="is-publish">Publish</label>
+            <input type="date" class="form-control" id="publish-date" name="published_date" checked="<%= manga.published_date == null ? '' : manga.published_date.toISOString().split('T')[0] %>">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="page">Page</label>
+            <input type="number" class="form-control" name="page_count" min="1" id="page" checked="<%= manga.page_count %>">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="cover">Cover</label>
+            <input type="file" class="form-control" id="cover" name="cover_image">
+        </div>
+        <div class="form-group col-md-8">
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control" id="description" cols="30" rows="10"><%= manga.description %></textarea>
+        </div>
+    </div>
+</div>
