@@ -18,10 +18,10 @@
                                 <div class="card-body">
                                     <h5 class="card-title"><%= manga.title %></h5>
                                     <p class="card-text"><%= manga.description %></p>
-                                    <a href="#" class="btn btn-primary">Detail</a>
+                                    <a href="/mangas/<%= manga.id%>" class="btn btn-primary">Show Detail</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
+                                    <%= manga.is_publish ? manga.published_date.toDateString() : 'Not Published Yet' %>
                                 </div>
                             </div>
                         </div>
@@ -32,10 +32,10 @@
                                 <div class="card-body">
                                     <h5 class="card-title"><%= manga.title %></h5>
                                     <p class="card-text"><%= manga.description %></p>
-                                    <a href="#" class="btn btn-primary">Detail</a>
+                                    <a href="/mangas/<%= manga.id%>" class="btn btn-primary">Show Detail</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
+                                    <%= manga.is_publish ? manga.published_date.toDateString() : 'Not Published Yet' %>
                                 </div>
                             </div>
                         </div>
@@ -47,10 +47,10 @@
                             <div class="card-body">
                                 <h5 class="card-title"><%= manga.title %></h5>
                                 <p class="card-text"><%= manga.description %></p>
-                                <a href="#" class="btn btn-primary">Detail</a>
+                                <a href="/mangas/<%= manga.id%>" class="btn btn-primary">Show Detail</a>
                             </div>
                             <div class="card-footer text-muted">
-                                <%= manga.is_publish ? manga.published_date : 'Not Published Yet' %>
+                                <%= manga.is_publish ? manga.published_date.toDateString() : 'Not Published Yet' %>
                             </div>
                         </div>
                     </div>

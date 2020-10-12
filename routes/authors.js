@@ -83,8 +83,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    console.log(req.params.id)
+router.delete('/:id', async (req, res) => {    
     let author
     let mangas
     try{

@@ -1,39 +1,50 @@
-<div class="col-md-4 mt-3">
-    <div class="card text-center">    
-        <img src="/img/one-piece-marineford.png" class="card-img-top book-img" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">One Piece Marinford</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-muted">
-            2 days ago
-        </div>
-    </div>
-</div>
-<div class="col-md-4 mt-3">
-    <div class="card text-center">
-        <img src="/img/one-piece-reverie.png" class="card-img-top book-img" alt="...">
-        <div class="card-body">
-        <h5 class="card-title">One Piece Reverie</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-muted">
-        2 days ago
-        </div>
-    </div>
-</div>
-<div class="col-md-4 mt-3">
-    <div class="card text-center">
-        <img src="/img/one-piece-sabaondi.png" class="card-img-top book-img" alt="...">
-        <div class="card-body">
-        <h5 class="card-title">One Piece Sabaondi</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-muted">
-        2 days ago
-        </div>
-    </div>
+<div class="col-md-12 mt-5">
+    <% let index = 1;
+    mangas.forEach(manga => { 
+        if(index == 1 || (index % 3) == 1) { %>
+            <div class="row">
+                <div class="col-md-4 mt-3">
+                    <div class="card text-center">    
+                        <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= manga.title %></h5>
+                            <p class="card-text"><%= manga.description %></p>
+                            <a href="/mangas/<%= manga.id %>" class="btn btn-primary">Show Detail</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <%= manga.is_publish ? manga.published_date.toDateString() : 'Not Published Yet' %>
+                        </div>
+                    </div>
+                </div>
+        <% } else if((index % 3) == 0) { %>
+                <div class="col-md-4 mt-3">
+                    <div class="card text-center">    
+                        <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= manga.title %></h5>
+                            <p class="card-text"><%= manga.description %></p>
+                            <a href="/mangas/<%= manga.id %>" class="btn btn-primary">Show Detail</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <%= manga.is_publish ? manga.published_date.toDateString() : 'Not Published Yet' %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="col-md-4 mt-3">
+                <div class="card text-center">    
+                    <img src="<%= manga.coverImagePath %>" class="card-img-top book-img" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= manga.title %></h5>
+                        <p class="card-text"><%= manga.description %></p>
+                        <a href="/mangas/<%= manga.id %>" class="btn btn-primary">Show Detail</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <%= manga.is_publish ? manga.published_date.toDateString() : 'Not Published Yet' %>
+                    </div>
+                </div>
+            </div>
+        <%  } %>
+    <% index++; }) %>    
 </div>
